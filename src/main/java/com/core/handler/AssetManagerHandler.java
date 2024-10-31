@@ -92,35 +92,41 @@ public class AssetManagerHandler {
     
     /**
      * Returns the {@link Texture} associated with the given file name if it exists.
+     * If the texture is not already loaded, it attempts to load it before returning.
      *
      * @param fileName
      *         the name of the {@link Texture} file
-     * @return the {@link Texture} associated with the specified file name
-     * @throws GdxRuntimeException
-     *         if the {@link Texture} does not exist
+     * @return the {@link Texture} associated with the specified file name, loading it if necessary
      */
-    public Texture getTexture(String fileName) { return assetManager.get(fileName, Texture.class); }
+    public Texture getTexture(String fileName) {
+        Texture res;
+        try {
+            res = assetManager.get(fileName, Texture.class);
+        } catch (GdxRuntimeException ignored) {
+            tryLoadTexture(fileName);
+            res = assetManager.get(fileName, Texture.class);
+        }
+        return res;
+    }
     
     
     /**
-     * Returns the {@link Texture} associated with the given file name if it exists.
+     * Returns the {@link Texture} associated with the given file name, loading it if necessary.
      * Optionally sets the {@link TextureFilter} for both minification and magnification.
      *
      * @param fileName
      *         the name of the {@link Texture} file
      * @param filter
      *         the {@link TextureFilter} to use for both minification and magnification
-     * @return the {@link Texture} associated with the specified file name
-     * @throws GdxRuntimeException
-     *         if the {@link Texture} does not exist
+     * @return the {@link Texture} associated with the specified file name, loading it if necessary
      */
     public Texture getTexture(String fileName, TextureFilter filter) {
         return getTexture(fileName, filter, filter);
     }
     
     /**
-     * Returns the {@link Texture} associated with the given file name if it exists.
-     * Optionally sets the {@link TextureFilter} for both minification and magnification.
+     * Returns the {@link Texture} associated with the given file name, loading it if necessary.
+     * Optionally sets the specified {@link TextureFilter} for minification and magnification.
      *
      * @param fileName
      *         the name of the {@link Texture} file
@@ -128,9 +134,7 @@ public class AssetManagerHandler {
      *         the {@link TextureFilter} to use for minification
      * @param magFilter
      *         the {@link TextureFilter} to use for magnification
-     * @return the {@link Texture} associated with the specified file name
-     * @throws GdxRuntimeException
-     *         if the {@link Texture} does not exist
+     * @return the {@link Texture} associated with the specified file name, loading it if necessary
      */
     public Texture getTexture(String fileName, TextureFilter minFilter, TextureFilter magFilter) {
         Texture texture = getTexture(fileName);

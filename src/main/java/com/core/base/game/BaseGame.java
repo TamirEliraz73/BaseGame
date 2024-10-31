@@ -3,6 +3,11 @@ package com.core.base.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 
+/**
+ *
+ * @see com.badlogic.gdx.Game
+ * @author Tamir Eliraz
+ */
 public class BaseGame extends Game {
     private BaseScreen screen;
     

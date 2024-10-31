@@ -11,6 +11,9 @@ import com.badlogic.gdx.utils.viewport.*;
 
 import java.lang.reflect.InvocationTargetException;
 
+/**
+ * @author Tamir Eliraz
+ */
 public class BaseScreen implements Screen {
     private boolean centerCamera;
     private Color bgColor;
@@ -47,7 +50,7 @@ public class BaseScreen implements Screen {
             viewport = cls
                     .getConstructor(float.class, float.class, Camera.class)
                     .newInstance(worldWidth, worldHeight, camera);
-        }catch (NoSuchMethodException ignored){
+        } catch (NoSuchMethodException ignored) {
             viewport = cls
                     .getConstructor(float.class, float.class)
                     .newInstance(worldWidth, worldHeight);
