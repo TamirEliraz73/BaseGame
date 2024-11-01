@@ -8,6 +8,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.*;
+import com.core.base.actor.BaseActor;
+import com.core.base.group.BaseGroup;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -44,7 +47,7 @@ public class BaseScreen implements Screen {
         viewport.update(worldWidth, worldHeight, isCenterCamera());
     }
     
-    public void setViewport(float worldWidth, float worldHeight, Class<? extends Viewport> cls)
+    public void setViewport(float worldWidth, float worldHeight, @NotNull Class<? extends Viewport> cls)
             throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         try {
             viewport = cls
@@ -107,4 +110,18 @@ public class BaseScreen implements Screen {
     
     @Override
     public void dispose() { stage.dispose(); }
+    
+    public Stage getStage() {
+        return stage;
+    }
+    
+    public BaseScreen addActor(BaseActor actor) {
+        stage.addActor(actor);
+        return this;
+    }
+    
+    public BaseScreen addActor(BaseGroup group) {
+        stage.addActor(group);
+        return this;
+    }
 }
